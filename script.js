@@ -218,11 +218,23 @@ document.addEventListener('DOMContentLoaded', () => {
     animate();
 
     const countdownMusic = document.getElementById('countdownMusic');
+    const btnMusic = document.getElementById('btnMusic');
+
+    // Manual music trigger
+    if (btnMusic && countdownMusic) {
+        btnMusic.addEventListener('click', () => {
+            countdownMusic.play().catch(err => console.log("Audio play blocked:", err));
+            // Hide the prompt once music starts
+            btnMusic.parentElement.style.display = 'none';
+        });
+    }
 
     // Attempt to play music on first interaction to bypass autoplay restrictions
     const startAudio = () => {
         if (countdownMusic && !document.getElementById('lockScreen').classList.contains('unlocked')) {
-            countdownMusic.play().catch(err => console.log("Audio play blocked:", err));
+            countdownMusic.play().then(() => {
+                if (btnMusic) btnMusic.parentElement.style.display = 'none';
+            }).catch(err => console.log("Audio play blocked:", err));
         }
         document.removeEventListener('click', startAudio);
     };
