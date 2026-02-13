@@ -217,28 +217,38 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarousel();
     animate();
 
-    const countdownMusic = document.getElementById('countdownMusic');
-    const btnMusic = document.getElementById('btnMusic');
-
     // Manual music trigger
     if (btnMusic && countdownMusic) {
         btnMusic.addEventListener('click', () => {
-            countdownMusic.play().catch(err => console.log("Audio play blocked:", err));
-            // Hide the prompt once music starts
-            btnMusic.parentElement.style.display = 'none';
+            // "Prime" both audios for mobile
+            if (unlockedMusic) { unlockedMusic.play().then(() => unlockedMusic.pause()).catch(e => { }); }
+
+            countdownMusic.play().then(() => {
+                if (btnMusic) btnMusic.parentElement.style.display = 'none';
+            }).catch(err => console.log("Audio play blocked:", err));
         });
     }
 
     // Attempt to play music on first interaction to bypass autoplay restrictions
     const startAudio = () => {
-        if (countdownMusic && !document.getElementById('lockScreen').classList.contains('unlocked')) {
+        // Unlock both audios for mobile transitions
+        if (countdownMusic) {
             countdownMusic.play().then(() => {
-                if (btnMusic) btnMusic.parentElement.style.display = 'none';
-            }).catch(err => console.log("Audio play blocked:", err));
+                if (!document.getElementById('lockScreen').classList.contains('unlocked')) {
+                    // Keep playing if locked
+                } else {
+                    countdownMusic.pause();
+                }
+            }).catch(e => { });
         }
+
+        if (unlockedMusic) { unlockedMusic.play().then(() => unlockedMusic.pause()).catch(e => { }); }
+
         document.removeEventListener('click', startAudio);
+        document.removeEventListener('touchstart', startAudio);
     };
     document.addEventListener('click', startAudio);
+    document.addEventListener('touchstart', startAudio); // Better for mobile
 
     const isUnlocked = updateCountdown();
     if (!isUnlocked) {
