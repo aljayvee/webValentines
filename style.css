@@ -1,0 +1,350 @@
+:root {
+    --pink-primary: #ff4d6d;
+    --pink-secondary: #ff758f;
+    --red-primary: #c9184a;
+    --red-dark: #800f2f;
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-color: #590d22;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffb3c1 0%, #ff4d6d 50%, #c9184a 100%);
+    background-attachment: fixed;
+    color: var(--text-color);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#fireworksCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.background-decor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    z-index: 10;
+}
+
+.glass-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.5s ease-out;
+}
+
+.glass-section.active {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: var(--white);
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--white);
+    margin-bottom: 15px;
+}
+
+.heart-pulse {
+    font-size: 4rem;
+    margin: 20px 0;
+    animation: heartBeat 1.5s infinite;
+}
+
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.3);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.15);
+    }
+
+    60% {
+        transform: scale(1);
+    }
+}
+
+button {
+    background: var(--white);
+    color: var(--red-primary);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background: var(--pink-primary);
+    color: var(--white);
+}
+
+/* Carousel Styles */
+.carousel-container {
+    width: 100%;
+    position: relative;
+    margin: 20px 0;
+    border-radius: 15px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.carousel-slide {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.carousel-item img,
+.carousel-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+/* Letter Styles */
+.letter-content {
+    color: var(--white);
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: left;
+    margin: 20px 0;
+}
+
+.letter-content p {
+    margin-bottom: 15px;
+}
+
+.signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    text-align: right;
+}
+
+/* Floating Roses */
+.floating-roses {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.rose {
+    position: absolute;
+    font-size: 2rem;
+    pointer-events: none;
+    animation: floatUp 10s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Entrance Animations */
+.animate-text {
+    animation: fadeInDown 1s ease-out forwards;
+}
+
+.animate-text-delay {
+    opacity: 0;
+    animation: fadeInDown 1s ease-out 0.5s forwards;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Lock Overlay */
+.lock-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ffb3c1 0%, #ff4d6d 50%, #c9184a 100%);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1), opacity 1s ease;
+}
+
+.lock-overlay.unlocked {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.lock-content {
+    max-width: 90%;
+    width: 400px;
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px 0;
+    gap: 10px;
+}
+
+.time-unit {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+    min-width: 70px;
+}
+
+.time-unit span {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.time-unit p {
+    font-size: 0.7rem;
+    color: var(--white);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.lock-msg {
+    color: var(--white);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 380px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.6rem;
+    }
+
+    .glass-section {
+        padding: 20px;
+    }
+
+    .heart-pulse {
+        font-size: 3rem;
+    }
+}

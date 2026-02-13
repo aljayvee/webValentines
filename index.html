@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5th Monthsary | Karuma ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Lock Screen Overlay -->
+    <div id="lockScreen" class="lock-overlay">
+        <div class="lock-content glass-section active">
+            <h2>Locked Until</h2>
+            <h1>February 14, 2026</h1>
+            <div id="countdown" class="countdown-timer">
+                <div class="time-unit"><span id="days">00</span>
+                    <p>Days</p>
+                </div>
+                <div class="time-unit"><span id="hours">00</span>
+                    <p>Hours</p>
+                </div>
+                <div class="time-unit"><span id="minutes">00</span>
+                    <p>Minutes</p>
+                </div>
+                <div class="time-unit"><span id="seconds">00</span>
+                    <p>Seconds</p>
+                </div>
+            </div>
+            <p class="lock-msg">Wait for the special day, Karuma! ❤️</p>
+        </div>
+    </div>
+
+    <canvas id="fireworksCanvas"></canvas>
+
+    <div class="background-decor">
+        <div class="floating-roses"></div>
+    </div>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section id="hero" class="glass-section active">
+            <h1 class="animate-text">Happy 5th Monthsary!</h1>
+            <h2 class="animate-text-delay">Ansary Saidar Pala (Karuma)</h2>
+            <div class="heart-pulse">❤️</div>
+            <button class="btn-start" onclick="nextSection('memories')">Open Memories ✨</button>
+        </section>
+
+        <!-- Memories Carousel Section -->
+        <section id="memories" class="glass-section">
+            <h3>Your Pictures</h3>
+            <div class="carousel-container">
+                <div class="carousel-slide" id="carouselSlide">
+                    <!-- Images will be injected by JS -->
+                </div>
+                <button class="carousel-btn prev" onclick="prevSlide()">&#10094;</button>
+                <button class="carousel-btn next" onclick="nextSlide()">&#10095;</button>
+            </div>
+            <button class="btn-next" onclick="nextSection('letter')">Read my Letter 💌</button>
+        </section>
+
+        <!-- Letter Section -->
+        <section id="letter" class="glass-section">
+            <h3>To My Dearest Karuma,</h3>
+            <div class="letter-content">
+                <p>Happy 5th monthsary, my love! Time flies so fast when I'm with you. These past five months have been
+                    the happiest moments of my life.</p>
+                <p>You are my rock, my joy, and my everything. Thank you for being the amazing person that you are. I
+                    love you more than words can express.</p>
+                <p>Forever yours,</p>
+                <p class="signature">Aljayvee Versola</p>
+            </div>
+            <button class="btn-back" onclick="nextSection('hero')">Back to Start ❤️</button>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
