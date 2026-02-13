@@ -166,7 +166,7 @@ function createRoses() {
 }
 
 // --- Countdown & Date Lock Logic ---
-const targetDate = new Date('February 13, 2026 00:00:00').getTime();
+const targetDate = new Date('February 14, 2026 00:00:00').getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();
