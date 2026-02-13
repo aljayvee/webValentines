@@ -191,8 +191,21 @@ function updateCountdown() {
 
 function unlockPage() {
     const lockScreen = document.getElementById('lockScreen');
+    const countdownMusic = document.getElementById('countdownMusic');
+    const unlockedMusic = document.getElementById('unlockedMusic');
+
     if (lockScreen) {
         lockScreen.classList.add('unlocked');
+
+        // Music transition
+        if (countdownMusic) {
+            countdownMusic.pause();
+            countdownMusic.currentTime = 0;
+        }
+        if (unlockedMusic) {
+            unlockedMusic.play().catch(err => console.log("Audio play blocked:", err));
+        }
+
         setTimeout(() => {
             lockScreen.style.display = 'none';
         }, 1000);
@@ -203,6 +216,17 @@ function unlockPage() {
 document.addEventListener('DOMContentLoaded', () => {
     initCarousel();
     animate();
+
+    const countdownMusic = document.getElementById('countdownMusic');
+
+    // Attempt to play music on first interaction to bypass autoplay restrictions
+    const startAudio = () => {
+        if (countdownMusic && !document.getElementById('lockScreen').classList.contains('unlocked')) {
+            countdownMusic.play().catch(err => console.log("Audio play blocked:", err));
+        }
+        document.removeEventListener('click', startAudio);
+    };
+    document.addEventListener('click', startAudio);
 
     const isUnlocked = updateCountdown();
     if (!isUnlocked) {
