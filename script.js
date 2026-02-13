@@ -261,38 +261,59 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarousel();
     animate();
 
+    const countdownMusic = document.getElementById('countdownMusic');
+    const unlockedMusic = document.getElementById('unlockedMusic');
+    const btnMusic = document.getElementById('btnMusic');
+
     // Manual music trigger
     if (btnMusic && countdownMusic) {
         btnMusic.addEventListener('click', () => {
             // "Prime" both audios for mobile
-            if (unlockedMusic) { unlockedMusic.play().then(() => unlockedMusic.pause()).catch(e => { }); }
+            if (unlockedMusic) {
+                unlockedMusic.play().then(() => {
+                    unlockedMusic.pause();
+                    unlockedMusic.currentTime = 0;
+                }).catch(e => { });
+            }
 
             countdownMusic.play().then(() => {
-                if (btnMusic) btnMusic.parentElement.style.display = 'none';
+                btnMusic.parentElement.style.display = 'none';
             }).catch(err => console.log("Audio play blocked:", err));
         });
     }
 
     // Attempt to play music on first interaction to bypass autoplay restrictions
     const startAudio = () => {
-        // Unlock both audios for mobile transitions
-        if (countdownMusic) {
-            countdownMusic.play().then(() => {
-                if (!document.getElementById('lockScreen').classList.contains('unlocked')) {
-                    // Keep playing if locked
-                } else {
-                    countdownMusic.pause();
-                }
-            }).catch(e => { });
-        }
+        const isCurrentlyUnlocked = document.getElementById('lockScreen').classList.contains('unlocked');
 
-        if (unlockedMusic) { unlockedMusic.play().then(() => unlockedMusic.pause()).catch(e => { }); }
+        if (isCurrentlyUnlocked) {
+            // If already unlocked, play the main song
+            if (unlockedMusic) {
+                unlockedMusic.play().catch(e => { });
+            }
+            // Just prime the countdown one in case of accidental back button etc
+            if (countdownMusic) {
+                countdownMusic.play().then(() => countdownMusic.pause()).catch(e => { });
+            }
+        } else {
+            // If still locked, play the countdown song
+            if (countdownMusic) {
+                countdownMusic.play().catch(e => { });
+            }
+            // Prime the main song for later transition
+            if (unlockedMusic) {
+                unlockedMusic.play().then(() => {
+                    unlockedMusic.pause();
+                    unlockedMusic.currentTime = 0;
+                }).catch(e => { });
+            }
+        }
 
         document.removeEventListener('click', startAudio);
         document.removeEventListener('touchstart', startAudio);
     };
     document.addEventListener('click', startAudio);
-    document.addEventListener('touchstart', startAudio); // Better for mobile
+    document.addEventListener('touchstart', startAudio);
 
     const isUnlocked = updateCountdown();
     if (!isUnlocked) {
