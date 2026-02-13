@@ -166,7 +166,7 @@ function createRoses() {
 }
 
 // --- Countdown & Date Lock Logic ---
-const targetDate = new Date('February 14, 2026 00:00:00').getTime();
+const targetDate = new Date('February 13, 2026 00:00:00').getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();
@@ -210,6 +210,50 @@ function unlockPage() {
             lockScreen.style.display = 'none';
         }, 1000);
     }
+}
+
+// --- Final Heart Animation Logic ---
+function showHeart() {
+    nextSection('heartSection');
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 300;
+    canvas.height = 300;
+
+    let t = 0;
+    const points = [];
+
+    function draw() {
+        if (t > Math.PI * 2) {
+            document.getElementById('loveMessage').classList.add('show');
+            return;
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Mathematical Heart Curve
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+
+        points.push({
+            x: x * 10 + canvas.width / 2,
+            y: y * 10 + canvas.height / 2
+        });
+
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3;
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 1; i < points.length; i++) {
+            ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.stroke();
+
+        t += 0.05;
+        requestAnimationFrame(draw);
+    }
+    draw();
 }
 
 // Event Listeners
